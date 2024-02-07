@@ -1,19 +1,20 @@
 name: CircleCI website preview status
-
 on: [status]
+permissions: read-all
 jobs:
   circleci_artifacts_redirector_job:
     runs-on: ubuntu-latest
-    if: github.event.context == 'ci/circleci: build-docs'
+    if: "${{ github.event.context == 'ci/circleci: preview-docs' }}"
     permissions:
       statuses: write
     name: Run CircleCI artifacts redirector
     steps:
       - name: GitHub Action step
-        uses: larsoner/circleci-artifacts-redirector-action@master
+        uses: larsoner/circleci-artifacts-redirector-action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          # api-token generated from https://app.circleci.com/settings/user/tokens
           api-token: ${{ secrets.CIRCLECI_TOKEN }}
-          artifact-path: 0/docs/docs/_build/index.html
-          circleci-jobs: build-docs
+          artifact-path: 0/build/index.html
+          circleci-jobs: preview-docs
           job-title: Check the rendered docs here!
