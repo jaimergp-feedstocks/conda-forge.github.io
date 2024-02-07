@@ -12,13 +12,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup environment
+          name: Setup environment & build docs
           command: |
+            . /opt/conda/etc/profile.d/conda.sh
             conda env create -f .ci_scripts/environment.yml
-      - run:
-          name: Build docs
-          command: |
             conda activate conda-forge-docs
+            export DOCUSAURUS_URL="https://output.circle-artifacts.com/"
+            export DOCUSAURUS_BASE_URL="/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/build/"
             .ci_scripts/update_docs
       - store_artifacts:
           path: build/
