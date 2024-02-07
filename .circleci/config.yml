@@ -11,12 +11,16 @@ jobs:
           name: Setup environment
           command: |
             . /opt/conda/etc/profile.d/conda.sh
+            set -x
             conda env create -f .ci_scripts/environment.yml
+            conda info
+            conda list conda-forge-docs
       - run:
           name: Build site
           command: |
             . /opt/conda/etc/profile.d/conda.sh
             conda activate conda-forge-docs
+            set -x
             export DOCUSAURUS_URL="https://output.circle-artifacts.com/"
             export DOCUSAURUS_BASE_URL="/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/build/"
             .ci_scripts/update_docs
