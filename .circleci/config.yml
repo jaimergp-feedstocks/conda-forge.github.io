@@ -20,6 +20,9 @@ jobs:
             export DOCUSAURUS_URL="https://output.circle-artifacts.com/"
             export DOCUSAURUS_BASE_URL="/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/build/"
             .ci_scripts/update_docs
+            # Known limitation in CircleCI: https://discuss.circleci.com/t/circle-artifacts-com-not-using-index-html/320/3
+            # Post-process href's so "$DOCUSAURUS_BASE_URL/.*/.*/.../" becomes "$DOCUSAURUS_BASE_URL/.*/index.html"
+            find build/ -type f -name "*.html" -exec sed -i -E "s|href=\"$DOCUSAURUS_BASE_URL([^\"]+/)\"|href=\"$DOCUSAURUS_BASE_URL\1index.html\"|g" {} \;
       - store_artifacts:
           path: build/
       - persist_to_workspace:
