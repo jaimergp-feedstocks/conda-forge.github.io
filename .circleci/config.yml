@@ -14,10 +14,8 @@ jobs:
       - run:
           name: Setup environment
           command: |
+            . /opt/conda/etc/profile.d/conda.sh
             conda env create -f .ci_scripts/environment.yml
-      - run:
-          name: Build docs
-          command: |
             conda activate conda-forge-docs
             .ci_scripts/update_docs
       - store_artifacts:
