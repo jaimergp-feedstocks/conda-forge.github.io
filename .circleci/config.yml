@@ -29,10 +29,6 @@ jobs:
             find build/ -type f -name "*.html" -exec sed -i -E "s|href=\"$DOCUSAURUS_BASE_URL([^\"]+/)\"|href=\"$DOCUSAURUS_BASE_URL\1index.html\"|g" {} \;
       - store_artifacts:
           path: build/
-      - persist_to_workspace:
-          root: .
-          paths:
-            - build/
 workflows:
   preview-docs:
     jobs:
