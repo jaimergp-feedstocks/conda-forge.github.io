@@ -11,8 +11,8 @@ const editUrl = {
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "conda-forge | community-driven packaging for conda",
-  url: "https://conda-forge.org/",
-  baseUrl: "/",
+  url: process.env.DOCUSAURUS_URL || "https://conda-forge.org/",
+  baseUrl: process.env.DOCUSAURUS_BASE_URL || "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
   favicon: "img/favicon.ico",
